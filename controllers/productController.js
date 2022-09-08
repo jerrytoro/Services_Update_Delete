@@ -54,17 +54,14 @@ exports.putProduct = (req, res) => {
   const products = JSON.parse(
     fs.readFileSync(`${__dirname}/../data/products.json`)
   );
-  const foundProduct2 = products.find((p) => p.id == req.params.id);
-  const foundProduct = products.findIndex((p) => p.id == req.params.id);
-  if (foundProduct2) {
-    console.log("f")
-    products.splice(foundProduct, 1, {
-      id: Number(req.params.id),
-      name: req.body.name,
-      price: req.body.price,
-      category: req.body.category
+  const foundProduct = products.find((p) => p.id == req.params.id);
+  if (foundProduct) {
+    //products.splice(foundProduct,1,req.body);
+    var newProducts = products.filter(function(f){
+      return f !== foundProduct
     })
-    fs.writeFileSync(`${__dirname}/../data/products.json`, JSON.stringify(products));
+    newProducts.push(req.body);
+    fs.writeFileSync(`${__dirname}/../data/products.json`, JSON.stringify(newProducts));
     res.json({
       status: "updated"
     })
@@ -79,13 +76,17 @@ exports.deleteProduct = (req, res) => {
   const products = JSON.parse(
     fs.readFileSync(`${__dirname}/../data/products.json`)
   );
-  const foundProduct2 = products.find((p) => p.id == req.params.id);
-  const foundProduct = products.findIndex((p) => p.id == req.params.id);
-  if (foundProduct2) {
-    products.splice(foundProduct, 1)
-    fs.writeFileSync(`${__dirname}/../data/products.json`, JSON.stringify(products));
-    res.json({
-      status: "delete"
+  const foundProduct = products.find((p) => p.id == req.params.id);
+  if (foundProduct) {
+    var newProducts = products.filter(function(f){
+      return f !== foundProduct
+    })
+    fs.writeFileSync(`${__dirname}/../data/products.json`, JSON.stringify(newProducts));
+    res.status(200).json({
+      status: "delete",
+      data: {
+        product: foundProduct,
+      },
     })
   } else {
     res.status(404).json({
