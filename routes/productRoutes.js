@@ -6,10 +6,8 @@ productRouter
   .route("/")
   .get(productController.getAllProducts)
   .post(productController.addProduct);
-productRouter
-  .route("/:id")
-  .get(productController.getProductById)
-  .put(productController.putProduct)
-  .delete(productController.deleteProduct);
+productRouter.route("/:id").get(productController.getProductById);
+productRouter.route("/:id").put(productController.putProduct);
+productRouter.route("/:id").delete(productController.deleteProduct);
 
 module.exports = productRouter;
