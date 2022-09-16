@@ -15,11 +15,11 @@ exports.getAllProducts = catchAsync(async (req, res) => {
 });
 
 exports.addProduct = catchAsync(async (req, res) => {
-  const newproduct = await Product.create(req.body);
+  const newProduct = await Product.create(req.body);
   res.status(200).json({
     status: "success",
     data: {
-      product: newproduct,
+      product: newProduct,
     },
   });
 });
