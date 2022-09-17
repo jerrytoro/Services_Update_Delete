@@ -44,8 +44,11 @@ exports.putProduct = catchAsync(async (req, res) => {
   const foundProduct = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
   if (foundProduct) {
     res.status(200).json({
-      status: "updated"
-    })
+      status: "updated",
+      data: {
+        product: foundProduct,
+      },
+    });
   } else {
     res.status(404).json({
       status: "not found",
@@ -61,7 +64,7 @@ exports.deleteProduct = catchAsync(async (req, res) => {
       data: {
         product: foundProduct,
       },
-    })
+    });
   } else {
     res.status(404).json({
       status: "not found",

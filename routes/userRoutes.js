@@ -4,12 +4,12 @@ const userRouter = express.Router();
 //routes
 userRouter
   .route("/")
-  //.get(productController.getAllProducts)
+  .get(userController.getAllUsers)
   .post(userController.addUser);
-//userRouter
-  //.route("/:id")
-  //.get(productController.getProductById)
-  //.put(productController.putProduct)
-  //.delete(productController.deleteProduct);
+userRouter
+  .route("/:id")
+  .get(userController.getUserById)
+  .put(userController.putUser)
+  .delete(userController.deleteUser);
 
 module.exports = userRouter;
