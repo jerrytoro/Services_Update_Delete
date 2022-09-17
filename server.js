@@ -4,7 +4,7 @@ process.on("uncaughtException", (err) => {
   console.log("Shutting down");
   process.exit(1);
 });
-const Product = require("./models/Product")
+const Product = require("./models/Product");
 const app = require("./app");
 const port = process.env.PORT;
 

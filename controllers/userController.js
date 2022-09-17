@@ -1,4 +1,5 @@
 const fs = require("fs");
+const crypto = require("crypto");
 const User = require("../models/User");
 const catchAsync = require("../utils/catchAsync");
 
@@ -15,7 +16,13 @@ exports.getAllUsers = catchAsync(async (req, res) => {
 });
 
 exports.addUser = catchAsync(async (req, res) => {
-    const newUser = await User.create(req.body);
+    req.body.password = crypto
+        .createHash("sha256")
+        .update(req.body.password)
+        .digest("hex");
+    let newUser = await User.create(req.body);
+    newUser = newUser.toObject();
+    delete newUser.password;
     res.status(200).json({
         status: "success",
         data: {
@@ -41,7 +48,13 @@ exports.getUserById = catchAsync(async (req, res) => {
 });
 
 exports.putUser = catchAsync(async (req, res) => {
-    const foundUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    req.body.password = crypto
+        .createHash("sha256")
+        .update(req.body.password)
+        .digest("hex");
+    let foundUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    foundUser = foundUser.toObject();
+    delete foundUser.password;
     if (foundUser) {
         res.status(200).json({
             status: "updated",
