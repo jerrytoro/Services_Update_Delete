@@ -9,7 +9,7 @@ exports.addProductcart = catchAsync(async (req, res) => {
     res.status(200).json({
         status: "success",
         data: {
-            product: createshoppingCart,
+            cart: createshoppingCart,
         },
     });
 });
@@ -20,7 +20,7 @@ exports.deleteProductcart = catchAsync(async (req, res) => {
         res.status(200).json({
             status: "delete",
             data: {
-                user: foundProductcart,
+                cart: foundProductcart,
             },
         });
     } else {
@@ -31,5 +31,5 @@ exports.deleteProductcart = catchAsync(async (req, res) => {
 });
 
 exports.payProductcart = catchAsync(async (req, res) => {
-    
+
 });
